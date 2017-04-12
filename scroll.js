@@ -51,6 +51,9 @@ function  getDocRect(e){
 // offsetTop                clientTop               scrollTop
 // offsetParent 所相对的父元素
 
+
+
+
 function getElementPosition(e){ /*获取文档坐标*/
 	var x =0 ,y=0;
 	while(e!=null){

@@ -26,15 +26,41 @@ function getRequest(url, param, success, fail) {
   var xhr = createXHR();
   for (var item in param) {
     url += (url.indexOf("?") == -1) ? "?" : '&';
-    url += encodeURLComponent(name) + "=" + encodeURLComponent(value);
+    url += encodeURLComponent(item) + "=" + encodeURLComponent(param[item]);
   }
   xhr.open('get', url);
-  xhr.send(null);
-  if (xhr.readyState == 4) {
-    if ((xhr.status >= 200) && xhr.status < 300) || xhr.status == 304 {
-      if (success) { success(xhr.responseText) }
-    }  else {
-      if (fail) { fail(xhr.status) }
+  xhr.onreadystatechange =function(){
+    if (xhr.readyState == 4) {
+      if ((xhr.status >= 200) && xhr.status < 300) || xhr.status == 304 {
+        if (success) { success(xhr.responseText) }
+      }  else {
+        if (fail) { fail(xhr.status) }
+      }
     }
   }
+  xhr.send(null);
+
 }
+
+// post发送表单数据
+function postFormData()(url, param, success, fail) {
+  var xhr = createXHR();
+  var data = [];
+  for (var item in param) {
+    data.push(encodeURLComponent(item) + "=" + encodeURLComponent(param[item]));
+  }
+  data = data.join("&");
+  xhr.open('post', url);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urllencoded");
+  xhr.onreadystatechange =function(){
+    if (xhr.readyState == 4) {
+      if ((xhr.status >= 200) && xhr.status < 300) || xhr.status == 304 {
+        if (success) { success(xhr.responseText) }
+      }  else {
+        if (fail) { fail(xhr.status) }
+      }
+    }
+  }
+  xhr.send(data);
+}
+

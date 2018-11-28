@@ -31,5 +31,31 @@ var EventUtil = {
     } else {
       e.returnValue = false;
     }
-  }
+  },
+  getButton: function(event){
+    if (document.implementation.hasFeature("MouseEvents", 2.0)){
+      return event.returnValue
+    } else {
+      switch (event.buttob){
+        case 0:
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+          return 0;
+        case 2:
+        case 6:
+          return 2;
+        case 4:
+          return 1;
+      }
+    }
+  },
+  getCharCode: function(event){
+    if (typeof event.charCode == "number"){
+    return event.charCode;
+    } else {
+    return event.keyCode;
+    }
+    },
 };
